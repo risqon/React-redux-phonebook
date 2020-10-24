@@ -1,36 +1,44 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { loadPhone } from '../actions'
-// postUser, searchUsers, searchMode, , cancelSearch
-class SearchForm extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            name: "",
-            phone: ""
-        }
-        this.handleChangePhone = this.handleChangePhone.bind(this);
-        this.handleChangeName = this.handleChangeName.bind(this);
-        this.handleClick = this.handleClick.bind(this)
-    }
+import { searchContacts, loadPhone, onSearch } from '../actions';
 
-    handleChangePhone(event) {
-        this.setState({ Phone: event.target.value });
-        this.props.searchUsers(this.state.name, event.target.value)
-        this.props.searchMode({ name: this.state.name, phone: event.target.value })
+
+class SearchForm extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: '',
+            phone: ''
+        }
+
+        this.handleChangeName = this.handleChangeName.bind(this);
+
+        this.handleChangePhone = this.handleChangePhone.bind(this);
+
+        this.handleReset = this.handleReset.bind(this);
     }
 
     handleChangeName(event) {
-        this.setState({ Name: event.target.value });
-        this.props.searchUsers(event.target.value, this.state.Phone)
-        this.props.searchMode({ name: event.target.value, phone: this.state.phone })
-    }
-    handleClick(event) {
-        this.props.loadPhones()
-        this.props.cancelSearch()
-        this.setState({ name: "", phone: "" });
-        event.preventDefault()
+        let { phone } = this.state
 
+        this.setState({ name: event.target.value })
+        this.props.searchContacts(event.target.value, phone)
+        this.props.onSearch({ name: event.target.value, phone: phone })
+    }
+
+    handleChangePhone(event) {
+        let { name } = this.state
+
+        this.setState({ phone: event.target.value })
+        this.props.searchContacts(name, event.target.value)
+        this.props.onSearch({ name: name, phone: event.target.value })
+    }
+
+    handleReset(event) {
+        this.props.loadPhones()
+        this.setState({ name: '', phone: '' });
+        event.preventDefault();
     }
 
     render() {
@@ -55,7 +63,7 @@ class SearchForm extends Component {
                         </div>
                         <div className="form-group row align-self-center">
                             <div className="col-sm-12">
-                                <button type="button" className="btn btn-outline-warning  btn-cancel float-right reset" onClick={this.handleClick}><i className="fa fa-refresh"></i> Reset </button>
+                                <button type="button" className="btn btn-outline-warning  btn-cancel float-right reset" onClick={this.handleReset}><i className="fa fa-refresh"></i> Reset </button>
 
                             </div>
                         </div>
@@ -65,17 +73,20 @@ class SearchForm extends Component {
         )
     }
 }
-
+const mapStateToProps = (state) => ({
+    isSearch: state.phones.isSearch,
+    filterName: state.phones.filtername,
+    filterPhone: state.phones.filterphone
+})
 const mapDispatchToProps = dispatch => ({
-    // postUser: (phone, name, id) => dispatch(postUser(phone, name, id)),
-    // searchUsers: (name, phone) => dispatch(searchUsers(name, phone)),
-    // searchMode: (filter) => dispatch(searchMode(filter)),
     loadPhones: () => dispatch(loadPhone()),
-    // cancelSearch: () => dispatch(cancelSearch())
+    searchContacts: (name, phone, offset, limit) => dispatch(searchContacts(name, phone, offset, limit)),
+    onSearch: (filter) => dispatch(onSearch(filter))
+
 
 })
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(SearchForm)

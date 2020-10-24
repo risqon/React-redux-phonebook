@@ -6,18 +6,18 @@ import { loadPhone } from '../actions'
 import { connect } from 'react-redux'
 
 class TodoList extends Component {
-  
+
     componentDidMount() {
         this.props.load();
     }
 
     render() {
-        const todos = this.props.stateFromMaps.map((item, index) => {
+        const todos = this.props.phones.map((item, index) => {
             return item.isEdit ?
                 (<EditForm
-                    key={item.id}
+                    key={index}
                     id={item.id}
-                    index={index + 1}
+                    index={this.props.page === 1 ? index + 1 : (this.props.page - 1) * 5 + (index + 1)}
                     sent={item.sent}
                     name={item.name}
                     phone={item.phone}
@@ -26,9 +26,9 @@ class TodoList extends Component {
                 :
                 (
                     < TodoItem
-                        key={item.id}
+                        key={index}
                         id={item.id}
-                        index={index + 1}
+                        index={this.props.page === 1 ? index + 1 : (this.props.page - 1) * 5 + (index + 1)}
                         sent={item.sent}
                         name={item.name}
                         phone={item.phone}
@@ -57,11 +57,14 @@ class TodoList extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    stateFromMaps: state.phones
+    phones: state.phones.phones,
+    page: state.phones.page,
+    pages: state.phones.pages
 })
 
 const mapDispatchToProps = (dispatch) => ({
     load: () => dispatch(loadPhone())
+    
 })
 
 export default connect(

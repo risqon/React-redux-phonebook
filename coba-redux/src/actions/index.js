@@ -15,9 +15,9 @@ const loadPhoneFailure = () => ({
     type: 'LOAD_PHONE_FAILURE'
 })
 
-export const loadPhone = () => {
+export const loadPhone = (offset = 0, limit = 5) => {
     return dispatch => {
-        return request.get('phones')
+        return request.get('phones',{offset, limit})
             .then(function (response) {
                 dispatch(loadPhoneSuccess(response.data))
             })
@@ -29,6 +29,46 @@ export const loadPhone = () => {
 }
 
 // end load phone data
+
+// start search phone data
+export const searchContacts = (name, phone, offset = 0, limit = 5) => {
+    return dispatch => {
+        return request.get('phones', { name, phone, offset, limit })
+            .then(function (response) {
+                dispatch(loadPhoneSuccess(response.data))
+            })
+            .catch(function (error) {
+                console.log(error);
+                dispatch(loadPhoneFailure)
+            })
+    }
+
+}
+
+
+// end search phone data
+
+// on search 
+export const onSearch = (filter) => ({
+    type: 'ON_SEARCH', filter
+})
+
+//PAGINATION ACTIONS START
+
+export const previousPage = () => ({
+    type: 'PREVIOUS_PAGE'
+})
+
+export const changePage = (page) => ({
+    type: 'CHANGE_PAGE',
+    page
+})
+
+export const nextPage = () => ({
+    type: 'NEXT_PAGE'
+})
+
+//PAGINATION ACTIONS END
 
 // start post phone data
 
@@ -155,7 +195,7 @@ const putPhoneRedux = (id, name, phone) => ({
 
 export const editUpdatePhone = (id, name, phone) => {
     return dispatch => {
-        dispatch(putPhoneRedux(id,name, phone))
+        dispatch(putPhoneRedux(id, name, phone))
         return request.put(`phones/${id}`, { name, phone })
             .then(function (response) {
                 dispatch(putPhoneSuccess(response.data))

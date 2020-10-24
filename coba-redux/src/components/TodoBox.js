@@ -3,6 +3,7 @@ import AddForm from '../containers/AddForm'
 import TodoList from '../containers/TodoList';
 import Jumbotron from '../containers/Jumbotron';
 import SearchForm from '../containers/SearchForm'
+import Pagination from '../containers/Paginations'
 
 
 
@@ -23,7 +24,7 @@ function TodoBox() {
               <div className="card-body">
                 <TodoList />
               </div>
-              {/* <Pagination /> */}
+              <Pagination />
             </div>
           </div>
         </div>
