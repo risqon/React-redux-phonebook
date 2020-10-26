@@ -10,16 +10,18 @@ let globalState = {
 const phones = (state = globalState, action) => {
     switch (action.type) {
         case 'LOAD_PHONE_SUCCESS':
-
+                console.log(state)
             return {
-                ...state, phones: action.phones.map((item) => {
+                
+                ...state, 
+                phones: action.phones.map((item) => {
                     item.sent = true;
-                    item.isEdit = false
                     return item
+                    
                 }),
-                pages: Math.ceil(action.phones.count / 5)
+                pages: Math.ceil(action.phones.count / 3 )
             }
-
+           
         case 'ON _SEARCH':
             return {
                 ...state,
@@ -29,20 +31,24 @@ const phones = (state = globalState, action) => {
             }
 
         case 'NEXT_PAGE':
+            console.log('1', state)
             return {
-                ...state, page: state.page + 1
+                ...state, 
+                page: state.page + 1
             }
 
         case 'PREVIOUS_PAGE':
             return {
-                ...state, page: state.page - 1
+                ...state, 
+                page: state.page - 1
             }
 
         case 'CHANGE_PAGE':
             return {
-                ...state, page: action.page
+                ...state, 
+                page: action.page
             }
-
+            
         case 'POST_PHONE':
             return {
                 ...state,

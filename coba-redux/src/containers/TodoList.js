@@ -17,7 +17,7 @@ class TodoList extends Component {
                 (<EditForm
                     key={index}
                     id={item.id}
-                    index={this.props.page === 1 ? index + 1 : (this.props.page - 1) * 5 + (index + 1)}
+                    index={this.props.page === 1 ? index + 1 : (this.props.page - 1) * 3 + (index + 1)}
                     sent={item.sent}
                     name={item.name}
                     phone={item.phone}
@@ -28,7 +28,7 @@ class TodoList extends Component {
                     < TodoItem
                         key={index}
                         id={item.id}
-                        index={this.props.page === 1 ? index + 1 : (this.props.page - 1) * 5 + (index + 1)}
+                        index={this.props.page === 1 ? index + 1 : (this.props.page - 1) * 3 + (index + 1)}
                         sent={item.sent}
                         name={item.name}
                         phone={item.phone}

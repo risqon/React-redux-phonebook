@@ -6,9 +6,8 @@ const request = axios.create({
 });
 
 // start load phone data
-const loadPhoneSuccess = (phones, response) => ({
+const loadPhoneSuccess = (phones) => ({
     type: 'LOAD_PHONE_SUCCESS',
-    response,
     phones
 })
 
@@ -16,10 +15,11 @@ const loadPhoneFailure = () => ({
     type: 'LOAD_PHONE_FAILURE'
 })
 
-export const loadPhone = (offset = 0, limit = 5) => {
+export const loadPhone = (offset = 0, limit = 3) => {
     return dispatch => {
-        return request.get('phones',{offset, limit})
+        return request.get('phones')
             .then(function (response) {
+                console.log('1',response.data)
                 dispatch(loadPhoneSuccess(response.data))
             })
             .catch(function (error) {
@@ -32,7 +32,7 @@ export const loadPhone = (offset = 0, limit = 5) => {
 // end load phone data
 
 // start search phone data
-export const searchContacts = (name, phone, offset = 0, limit = 5) => {
+export const searchContacts = (name, phone, offset = 0, limit = 3) => {
     return dispatch => {
         return request.get('phones', { name, phone, offset, limit })
             .then(function (response) {

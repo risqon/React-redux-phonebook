@@ -7,7 +7,7 @@ class Pagination extends Component {
 
       super(props);
       this.state = {
-         limit: 5
+         limit: 3
       }
       this.handlePrevious = this.handlePrevious.bind(this);
       this.handleNext = this.handleNext.bind(this);
