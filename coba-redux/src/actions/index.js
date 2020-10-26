@@ -6,8 +6,9 @@ const request = axios.create({
 });
 
 // start load phone data
-const loadPhoneSuccess = (phones) => ({
+const loadPhoneSuccess = (phones, response) => ({
     type: 'LOAD_PHONE_SUCCESS',
+    response,
     phones
 })
 
@@ -27,7 +28,7 @@ export const loadPhone = (offset = 0, limit = 5) => {
             });
     }
 }
-
+    
 // end load phone data
 
 // start search phone data

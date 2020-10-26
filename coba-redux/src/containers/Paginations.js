@@ -7,12 +7,10 @@ class Pagination extends Component {
 
       super(props);
       this.state = {
-         limit: 3
+         limit: 5
       }
       this.handlePrevious = this.handlePrevious.bind(this);
-
       this.handleNext = this.handleNext.bind(this);
-     
       this.handlePage = this.handlePage.bind(this);
    }
 
@@ -21,7 +19,7 @@ class Pagination extends Component {
       let offset = ((this.props.page - 1) - 1) * limit
 
       if (this.props.isSearch) {
-         this.props.searchContacts(this.props.filtername, this.props.filterphone, offset, limit);
+         this.props.searchContacts(this.props.filterName, this.props.filterPhone, offset, limit);
       } else {
          this.props.loadPhones(offset);
       }
@@ -34,7 +32,7 @@ class Pagination extends Component {
       let offset = ((this.props.page + 1) - 1) * limit;
 
       if (this.props.isSearch) {
-         this.props.searchContacts(this.props.filtername, this.props.filterphone, offset, limit);
+         this.props.searchContacts(this.props.filterName, this.props.filterPhone, offset, limit);
       } else {
          this.props.loadPhones(offset);
       }
@@ -48,7 +46,7 @@ class Pagination extends Component {
       const offset = (page - 1) * this.state.limit;
 
       if (this.props.isSearch) {
-         this.props.searchContacts(this.props.filtername, this.props.filterphone, offset, limit);
+         this.props.searchContacts(this.props.filterName, this.props.filterPhone, offset, limit);
       } else {
          this.props.loadPhones(offset);
       }
@@ -66,8 +64,8 @@ class Pagination extends Component {
                </li>
 
                {[(this.props.pages)].map((num, index) => {
-                  return (<li className={this.props.page === index + 1 ? "page-item active" : "page-item"} key={index} ><a 
-                  className="page-link" id={index + 1} onClick={this.handlePage} href="/#" >{index + 1}</a></li>)
+                  return (<li className={this.props.page === index + 1 ? "page-item active" : "page-item"} key={index} ><a
+                     className="page-link" id={index + 1} onClick={this.handlePage} href="/#" >{index + 1}</a></li>)
                })
                }
 
@@ -85,8 +83,8 @@ const mapStateToProps = (state) => ({
    page: state.phones.page,
    pages: state.phones.pages,
    isSearch: state.phones.isSearch,
-   filterName: state.phones.filtername,
-   filterPhone: state.phones.filterphone
+   filterName: state.phones.filterName,
+   filterPhone: state.phones.filterPhone
 })
 
 const mapDispatchToProps = dispatch => ({

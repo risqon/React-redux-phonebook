@@ -3,8 +3,8 @@ let globalState = {
     page: 1,
     pages: 0,
     isSearch: false,
-    filtername: '',
-    filterphone: ''
+    filterName: '',
+    filterPhone: ''
 }
 
 const phones = (state = globalState, action) => {
@@ -24,8 +24,8 @@ const phones = (state = globalState, action) => {
             return {
                 ...state,
                 isSearch: true,
-                filtername: action.filter.name,
-                filterphone: action.filter.phone
+                filterName: action.filter.name,
+                filterPhone: action.filter.phone
             }
 
         case 'NEXT_PAGE':

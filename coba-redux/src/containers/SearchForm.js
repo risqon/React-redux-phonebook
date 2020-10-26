@@ -75,8 +75,8 @@ class SearchForm extends Component {
 }
 const mapStateToProps = (state) => ({
     isSearch: state.phones.isSearch,
-    filterName: state.phones.filtername,
-    filterPhone: state.phones.filterphone
+    filterName: state.phones.filterName,
+    filterPhone: state.phones.filterPhone
 })
 const mapDispatchToProps = dispatch => ({
     loadPhones: () => dispatch(loadPhone()),
