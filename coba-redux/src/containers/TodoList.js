@@ -5,6 +5,7 @@ import EditForm from './EditForm'
 import { loadPhone } from '../actions'
 import { connect } from 'react-redux'
 
+
 class TodoList extends Component {
 
     componentDidMount() {
@@ -12,7 +13,9 @@ class TodoList extends Component {
     }
 
     render() {
+        
         const todos = this.props.phones.map((item, index) => {
+
             return item.isEdit ?
                 (<EditForm
                     key={index}
@@ -37,6 +40,7 @@ class TodoList extends Component {
         })
 
         return (
+           
             <div>
                 <table className="table table-striped table-light centering  table-hover">
                     <thead className="thead-dark">
@@ -61,6 +65,7 @@ const mapStateToProps = (state) => ({
     page: state.phones.page,
     pages: state.phones.pages
 })
+
 
 const mapDispatchToProps = (dispatch) => ({
     load: () => dispatch(loadPhone())

@@ -1,13 +1,15 @@
 import axios from 'axios'
 
+
 const request = axios.create({
     baseURL: 'http://localhost:3001/api',
     timeout: 1000
 });
 
 // start load phone data
-const loadPhoneSuccess = (phones) => ({
+const loadPhoneSuccess = (phones, isiPage) => ({
     type: 'LOAD_PHONE_SUCCESS',
+    isiPage,
     phones
 })
 
@@ -15,12 +17,16 @@ const loadPhoneFailure = () => ({
     type: 'LOAD_PHONE_FAILURE'
 })
 
-export const loadPhone = (offset = 0, limit = 3) => {
+export const loadPhone = (page) => {
+    // console.log('risqon', page)
     return dispatch => {
-        return request.get('phones')
+        if (!page) { page = '1' }
+        return request.get(`phones/?page=${page}`)
             .then(function (response) {
-                console.log('1',response.data)
-                dispatch(loadPhoneSuccess(response.data))
+                let isiPage = response.data[response.data.length - 1]
+                response.data.pop()
+                console.log(isiPage)
+                dispatch(loadPhoneSuccess(response.data, isiPage))
             })
             .catch(function (error) {
                 console.error(error);
@@ -28,15 +34,21 @@ export const loadPhone = (offset = 0, limit = 3) => {
             });
     }
 }
-    
+
 // end load phone data
 
 // start search phone data
 export const searchContacts = (name, phone, offset = 0, limit = 3) => {
+    console.log('risqon', name, phone)
     return dispatch => {
-        return request.get('phones', { name, phone, offset, limit })
+
+        return request.get(`phones/${name}/${phone}`)
             .then(function (response) {
-                dispatch(loadPhoneSuccess(response.data))
+                console.log('test', response.data)
+                let isiPage = response.data[response.data.length - 1]
+                response.data.pop()
+                console.log(isiPage)
+                dispatch(loadPhoneSuccess(response.data, isiPage))
             })
             .catch(function (error) {
                 console.log(error);
@@ -94,6 +106,7 @@ export const postPhone = (name, phone) => {
         return request.post('phones', { id, name, phone })
             .then(function (response) {
                 dispatch(postPhoneSuccess(response.data))
+                dispatch(loadPhone(1))
             })
             .catch(function (error) {
                 console.error(error);
@@ -124,6 +137,7 @@ export const deletePhone = (id) => {
         return request.delete(`phones/${id}`)
             .then(function (response) {
                 dispatch(deletePhoneSuccess(response.data))
+                dispatch(loadPhone())
             })
             .catch(function (error) {
                 console.error(error);

@@ -12,33 +12,44 @@ class SearchForm extends Component {
             phone: ''
         }
 
-        this.handleChangeName = this.handleChangeName.bind(this);
+        // this.handleChangeName = this.handleChangeName.bind(this);
 
-        this.handleChangePhone = this.handleChangePhone.bind(this);
+        // this.handleChangePhone = this.handleChangePhone.bind(this);
 
-        this.handleReset = this.handleReset.bind(this);
+        // this.handleReset = this.handleReset.bind(this);
     }
 
-    handleChangeName(event) {
-        let { phone } = this.state
+    // handleChangeName(event) {
+    //     let { phone } = this.state
 
-        this.setState({ name: event.target.value })
-        this.props.searchContacts(event.target.value, phone)
-        this.props.onSearch({ name: event.target.value, phone: phone })
+    //     this.setState({ name: event.target.value })
+    //     this.props.searchContacts(event.target.value, phone)
+    //     this.props.onSearch({ name: event.target.value, phone: phone })
+    // }
+
+    // handleChangePhone(event) {
+    //     let { name } = this.state
+
+    //     this.setState({ phone: event.target.value })
+    //     this.props.searchContacts(name, event.target.value)
+    //     this.props.onSearch({ name: name, phone: event.target.value })
+    // }
+
+    handleChangeName = (event) => {
+        this.setState({ name: event.target.value });
     }
 
-    handleChangePhone(event) {
-        let { name } = this.state
-
-        this.setState({ phone: event.target.value })
-        this.props.searchContacts(name, event.target.value)
-        this.props.onSearch({ name: name, phone: event.target.value })
+    handleChangePhone = (event) => {
+        this.setState({ phone: event.target.value });
     }
 
-    handleReset(event) {
-        this.props.loadPhones()
-        this.setState({ name: '', phone: '' });
-        event.preventDefault();
+    handleReset = (event) => {
+        console.log(event.target.value)
+        let { name , phone } = this.state
+
+        this.setState({ name: event.target.value, phone: event.target.value })
+        this.props.searchContacts(name, phone)
+        this.props.onSearch({ name: event.target.value, phone: event.target.value })
     }
 
     render() {
