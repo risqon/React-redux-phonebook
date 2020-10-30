@@ -28,35 +28,6 @@ router.get('/', function (req, res, next) {
 })
 
 
-// router.get('/', function (req, res, next) {
-//   let page = req.query.page || 1
-//   let limit = 3
-//   let offset = (page - 1) * limit
-
-//   Phone.countDocuments({}).then(total => {
-//     let pages = Math.ceil(total / limit)
-
-//     Phone.find({}).sort({ 'id': -1 }).limit(limit).skip(offset).then(result => {
-//       res.status(200).render( {
-//         result,
-//         page,
-//         pages
-//       }).catch(err =>{
-//         res.status(500).json({
-//           error: true,
-//           message: err
-//         })
-//       })
-//     })
-//   })
-
-// })
-
-
-
-
-
-
 router.get('/:name/:phone', function (req, res, next) {
   // Chat.find({}).sort({ 'id': -1 }).then((data) => {    // sort yg terbaru diatas
   let url = req.url == '/' ? '/?page=1' : req.url;
@@ -102,6 +73,7 @@ router.put('/:id', function (req, res, next) {
   const { name, phone } = req.body
   const { id } = req.params
   Phone.findOneAndUpdate({ id }, { name, phone }, { new: true }).then((data) => {
+    console.log(data)
     res.status(201).json(data)
   }).catch(() => {
     res.status(500).json(err)
